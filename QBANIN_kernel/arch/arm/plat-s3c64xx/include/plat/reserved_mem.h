@@ -25,7 +25,7 @@ struct sec_log_buf {
 	char *data;
 };
 
-#define RESERVED_PMEM_END_ADDR 		(DRAM_END_ADDR - (1 * 1024 * 1024))		/* Reserved 1MB for Frame & Log Buffer */
+#define RESERVED_PMEM_END_ADDR 		(DRAM_END_ADDR - (2 * 1024 * 1024))		/* Reserved 1MB for Frame & Log Buffer */
 
 extern void sec_log_buf_init(void);
 
@@ -41,7 +41,7 @@ extern void sec_log_buf_init(void);
 #define RESERVED_PMEM_JPEG		(3 * 1024 * 1024)
 #define RESERVED_PMEM_PREVIEW		(2 * 1024 * 1024)
 #define RESERVED_PMEM_RENDER	  	(2 * 1024 * 1024)
-#define RESERVED_PMEM_STREAM	  	(2 * 1024 * 1024)
+#define RESERVED_PMEM_STREAM		(4 * 1024 * 1024) // 0 -> 4
 #define RESERVED_G3D			(32 * 1024 * 1024) 	/* G3D is shared with uppper memory areas */
 #define RESERVED_PMEM_GPU1		(0)
 #define RESERVED_PMEM			(8 * 1024 * 1024)
