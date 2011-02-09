@@ -25,7 +25,7 @@ struct sec_log_buf {
 	char *data;
 };
 
-#define RESERVED_PMEM_END_ADDR 		(DRAM_END_ADDR - (2 * 1024 * 1024))		/* Reserved 1MB for Frame & Log Buffer */
+#define RESERVED_PMEM_END_ADDR 		(DRAM_END_ADDR - (1 * 1024 * 1024))		/* Reserved 1MB for Frame & Log Buffer */
 
 extern void sec_log_buf_init(void);
 
