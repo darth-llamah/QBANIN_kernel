@@ -47,6 +47,9 @@
 
 #include "s3c-pcm.h"
 
+#define CONFIG_SND_S3C6400_SOC_AC97
+#define CONFIG_CPU_S3C6400
+
 #if defined CONFIG_SND_S3C6400_SOC_AC97
 #define MAIN_DMA_CH 1
 #else /*S3C6400 I2S */ 
