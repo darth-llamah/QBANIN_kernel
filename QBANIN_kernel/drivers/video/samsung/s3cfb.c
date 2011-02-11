@@ -792,14 +792,11 @@ static void s3cfb_init_fbinfo(s3c_fb_info_t *finfo, char *drv_name, int index)
 	finfo->fb.var.sync = s3c_fimd.sync;
 	finfo->fb.var.grayscale = s3c_fimd.cmap_grayscale;
 
-	finfo->fb.fix.smem_len = finfo->fb.var.xres_virtual * finfo->fb.var.yres_virtual * /*s3c_fimd.bytes_per_pixel*/ 4;
+	finfo->fb.fix.smem_len = 
+		finfo->fb.var.xres_virtual * finfo->fb.var.yres_virtual * 4;
 
-	finfo->fb.fix.line_length = finfo->fb.var.xres * s3c_fimd.bytes_per_pixel;
-
-#if !defined(CONFIG_FB_S3C_VIRTUAL_SCREEN) && defined(CONFIG_FB_S3C_DOUBLE_BUFFERING)
-	if (index < 2)
-		finfo->fb.fix.smem_len *= 2;
-#endif
+	finfo->fb.fix.line_length =
+		finfo->fb.var.xres_virtual * s3c_fimd.bytes_per_pixel;
 
 	for (i = 0; i < 256; i++)
 		finfo->palette_buffer[i] = S3C_FB_PALETTE_BUFF_CLEAR;
@@ -990,14 +987,16 @@ static int s3cfb_remove(struct platform_device *pdev)
 #ifdef CONFIG_HAS_EARLYSUSPEND
 	unregister_early_suspend(&info->early_suspend);
 #endif	/* CONFIG_HAS_EARLYSUSPEND */
+#if 0
 	s3cfb_stop_lcd();
 	msleep(1);
 
 	if (info->clk) {
 		clk_disable(info->clk);
 		clk_put(info->clk);
-	 	info->clk = NULL;
+		info->clk = NULL;
 	}
+#endif
 
 	irq = platform_get_irq(pdev, 0);
 	release_resource(info->mem);
