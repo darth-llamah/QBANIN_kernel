@@ -1993,11 +1993,10 @@ int s3cfb_is_clock_on(void)
 
 void s3cfb_enable_clock_power(void)
 {
-	struct early_suspend *early_suspend_ptr;
+	struct early_suspend *early_suspend_ptr = get_earlysuspend_ptr();
+	s3c_fb_info_t *info =
+		container_of(early_suspend_ptr, s3c_fb_info_t, early_suspend);
 
-	early_suspend_ptr = get_earlysuspend_ptr();
-
-	s3c_fb_info_t *info = container_of(early_suspend_ptr, s3c_fb_info_t, early_suspend);
 	s3cfb_resume_sub(info);
 
 	lcd_clock_status = 1;
@@ -2072,12 +2071,9 @@ int s3cfb_resume(struct platform_device *dev)
  * shutdown
  */
 extern void lcd_power_ctrl(s32 value);
-int s3cfb_shutdown(struct platform_device *dev)
+void s3cfb_shutdown(struct platform_device *dev)
 {
-#if 0
 	lcd_power_ctrl(0);
-#endif
-	return 0;
 }
 #else
 
@@ -2110,12 +2106,9 @@ int s3cfb_resume(struct platform_device *dev)
 /*
  * shutdown
  */
-int s3cfb_shutdown(struct platform_device *dev)
+void s3cfb_shutdown(struct platform_device *dev)
 {
-#if 0
 	lcd_power_ctrl(0);
-#endif
-	return 0;
 }
 #endif	/* CONFIG_HAS_EARLYSUSPEND */
 
@@ -2130,8 +2123,7 @@ int s3cfb_resume(struct platform_device *dev)
 	return 0;
 }
 
-int s3cfb_shutdown(struct platform_device *dev)
+void s3cfb_shutdown(struct platform_device *dev)
 {
-	return 0;
 }
 #endif	/* CONFIG_PM */

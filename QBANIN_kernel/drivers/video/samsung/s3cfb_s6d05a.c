@@ -599,9 +599,7 @@ void backlight_power_ctrl(s32 value)
 
 #define S6D05A_DEFAULT_BACKLIGHT_BRIGHTNESS	255
 
-static s32 s6d05a_backlight_off;
 static s32 s6d05a_backlight_brightness = S6D05A_DEFAULT_BACKLIGHT_BRIGHTNESS;
-static u8 s6d05a_backlight_last_level = 33;
 static DEFINE_MUTEX(s6d05a_backlight_lock);
 
 static void s6d05a_set_backlight_level(u8 level)
@@ -698,7 +696,7 @@ void s3cfb_display_logo(int win_num)
 	u16 *logo_virt_buf;
 #ifdef CONFIG_FB_S3C_BPP_24
 	u32 count;
-	u32 *scr_virt_buf = fbi->map_cpu_f1;
+	u32 *scr_virt_buf = (u32 *)fbi->map_cpu_f1;
 #endif
 
 	if(win_num != 0)

@@ -82,7 +82,7 @@ static unsigned int send_end_irq_token;
 static unsigned short int headset_status;
 static struct wake_lock headset_sendend_wake_lock;
 
-short int get_headset_status()
+short int get_headset_status(void)
 {
 	SEC_HEADSET_DBG(" headset_status %d", headset_status);
 	return headset_status;
@@ -245,7 +245,8 @@ static void sendend_switch_change(struct work_struct *ignored)
 
 	del_timer(&send_end_key_event_timer);
 	send_end_key_timer_token = 0;
-    mdelay(10); // for earjack keyevent delay	
+    mdelay(10); // for earjack keyevent delay
+	
 	headset_state = gpio_get_value(det_headset->gpio) ^ det_headset->low_active;
 	state = gpio_get_value(send_end->gpio) ^ send_end->low_active;
 

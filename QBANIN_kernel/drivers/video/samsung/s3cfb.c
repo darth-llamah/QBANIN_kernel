@@ -78,33 +78,6 @@ void s3cfb_set_backlight_level(int to)
 }
 EXPORT_SYMBOL(s3cfb_set_backlight_level);
 
-/* RAM Dump Info */
-
-#include <linux/sec_log.h>
-
-static struct struct_frame_buf_mark frame_buf_mark = {
-	.special_mark_1 = (('*' << 24) | ('^' << 16) | ('^' << 8) | ('*' << 0)),
-	.special_mark_2 = (('I' << 24) | ('n' << 16) | ('f' << 8) | ('o' << 0)),
-	.special_mark_3 = (('H' << 24) | ('e' << 16) | ('r' << 8) | ('e' << 0)),
-	.special_mark_4 = (('f' << 24) | ('b' << 16) | ('u' << 8) | ('f' << 0)),
-	.p_fb = 0,
-	.resX = 320,
-	.resY = 480,
-	.bpp = 24,
-	.frames =5,
-};
-
-static struct struct_marks_ver_mark marks_ver_mark = {
-	.special_mark_1 = (('*' << 24) | ('^' << 16) | ('^' << 8) | ('*' << 0)),
-	.special_mark_2 = (('I' << 24) | ('n' << 16) | ('f' << 8) | ('o' << 0)),
-	.special_mark_3 = (('H' << 24) | ('e' << 16) | ('r' << 8) | ('e' << 0)),
-	.special_mark_4 = (('v' << 24) | ('e' << 16) | ('r' << 8) | ('s' << 0)),
-	.log_mark_version = 0,
-	.framebuffer_mark_version = 1,
-};
-
-
-
 static int __init s3cfb_map_video_memory(s3c_fb_info_t *fbi)
 {
 	DPRINTK("map_video_memory(fbi=%p)\n", fbi);
@@ -126,10 +99,6 @@ static int __init s3cfb_map_video_memory(s3c_fb_info_t *fbi)
 		printk("            FB1: map_video_memory: dma=%08x cpu=%p size=%08x\n",
 			fbi->map_dma_f1, fbi->map_cpu_f1, fbi->fb.fix.smem_len);
 	}
-
-	/* RAM Dump Info */
-	if ((fbi->win_id == 1) && fbi->map_cpu_f1)
-		frame_buf_mark.p_fb = (void *)fbi->map_dma_f1;
 
 	if (!fbi->map_cpu_f1)
 		return -ENOMEM;
@@ -160,9 +129,6 @@ static int __init s3cfb_map_video_memory(s3c_fb_info_t *fbi)
 static void s3cfb_unmap_video_memory(s3c_fb_info_t *fbi)
 {
 	dma_free_writecombine(fbi->dev, fbi->map_size_f1, fbi->map_cpu_f1,  fbi->map_dma_f1);
-//#if defined(CONFIG_FB_S3C_DOUBLE_BUFFERING)
-//	dma_free_writecombine(fbi->dev, fbi->map_size_f2, fbi->map_cpu_f2,  fbi->map_dma_f2);
-//#endif
 
 	if (s3c_fimd.unmap_video_memory)
 		(s3c_fimd.unmap_video_memory)(fbi);
@@ -987,7 +953,7 @@ static int s3cfb_remove(struct platform_device *pdev)
 #ifdef CONFIG_HAS_EARLYSUSPEND
 	unregister_early_suspend(&info->early_suspend);
 #endif	/* CONFIG_HAS_EARLYSUSPEND */
-#if 0
+
 	s3cfb_stop_lcd();
 	msleep(1);
 
@@ -996,7 +962,6 @@ static int s3cfb_remove(struct platform_device *pdev)
 		clk_put(info->clk);
 		info->clk = NULL;
 	}
-#endif
 
 	irq = platform_get_irq(pdev, 0);
 	release_resource(info->mem);

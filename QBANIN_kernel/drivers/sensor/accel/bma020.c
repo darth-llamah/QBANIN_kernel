@@ -25,7 +25,7 @@ int bma020_init(bma020_t *bma020)
 
 }
 
-int bma020_soft_reset() 
+int bma020_soft_reset(void) 
 {
 	int comres;
 	unsigned char data=0;
@@ -909,7 +909,7 @@ int bma020_write_reg(unsigned char addr, unsigned char *data, unsigned char len)
 	return comres;
 }
 
-bma020acc_t bma020_calibrate()
+bma020acc_t bma020_calibrate(void)
 {
 	int sum_x = 0;
 	int sum_y = 0;
