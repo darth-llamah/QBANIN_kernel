@@ -40,7 +40,7 @@
 #define S3C_VA_SROMC	S3C_ADDR(0x01100000)	/* SROM SFR */
 #define S3C_VA_SYSTIMER	S3C_ADDR(0x01200000)	/* SROM SFR */
 #define S3C_VA_NAND     S3C_ADDR(0x01400000)    /* NAND */
-#define S3C_VA_AUDSS	S3C_ADDR(0x01600000)	/* Audio SubSystem */
+#define S3C_VA_AUDSS  S3C_ADDR(0x01600000)  /* Audio SubSystem */
 #define S3C_VA_ONENAND	S3C_ADDR(0x01800000)	/* onenand */
 
 #endif /* __ASM_PLAT_MAP_H */
