@@ -952,4 +952,4 @@ int __init s3c6410_pm_init(void)
 	__raw_writel(0x18, S3C_MEM0_CLK_GATE);
 
 	return 0;
-}
+} 
