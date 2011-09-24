@@ -1,0 +1,1 @@
+make -j4 CFLAGS=-"-marm -mtune=arm1176jzf-s -mcpu=arm1176jzf-s -mfpu=vfp -mfloat-abi=softfp -mthumb-interwork -O3 -DSP -DROLL"
