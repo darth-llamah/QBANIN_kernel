@@ -1,1 +1,0 @@
-make CONFIG_DEBUG_SECTION_MISMATCH=y -j4 CFLAGS=-"-marm -mtune=arm1176jzf-s -mcpu=arm1176jzf-s -mfpu=vfp -mfloat-abi=softfp -mthumb-interwork -O3 -DSP -DROLL" > debug.log 2>&1
